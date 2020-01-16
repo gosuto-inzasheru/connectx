@@ -37,24 +37,6 @@ def loop():
     obs = env.reset()
     done = False
 
-    def find_pref(matrix, pref):
-        found = False
-        rows = matrix.shape[0]
-
-        for r in reversed(range(rows)):
-            if matrix[r][pref] == 0:
-                found = True
-                break
-        if found == False:
-            return find_pref(matrix, pref + random.choice([-1, 1]))
-        return pref
-
-
-    def act(obs, conf):
-        matrix = np.array(obs.board).reshape(conf.rows, conf.columns)
-        centre_col = conf.columns // 2
-        return find_pref(matrix, centre_col)
-
     while not done:
         action = agent_smit(obs, conf)
         obs, reward, done, info = env.step(action)
